@@ -354,7 +354,7 @@ Provides the underlying infrastructure for storing structured and unstructured d
 
 
 
-Enables high availability and durability, ensuring databases can reliably access data.
+Enables high availability and ensuring databases can reliably access data.
 
 
 
