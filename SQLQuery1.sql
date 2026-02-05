@@ -1,4 +1,3 @@
-
 create database company
 use company
  
@@ -12,13 +11,31 @@ use company
   D date,
  Superid   foreign key  references employee(ssn) 
  );
-
+ drop database company
  alter table employee 
  add Dno int  foreign key references department1(Dnum);
  
  alter table employee
  drop column super_id;
 
+
+
+ drop table employee1 
+ drop table department
+
+ create table employee(
+ ssn int PRIMARY KEY Identity(1,1),
+ dnum int,
+
+ Firstname varchar(50),
+ Lastname varchar(50),
+  Gender varchar(10),
+  DB date,
+ Super_id  int  foreign key  references employee(ssn) 
+ );
+
+
+  
 
  create table department1(
  Dnum int PRIMARY KEY  identity(1,1),
@@ -44,6 +61,7 @@ use company
  );
  
  select *  from employee
+
  create table location(
  location varchar,
  Dnum int foreign Key references department(Dnum),
@@ -56,11 +74,14 @@ use company
  Houres int,
  );
 
- insert into employee (ssn,Superid,firstname,lastname,gender,BD)
 
-  values              (1  ,20, 'ahmed' , 'ali','male' ,'2/3/1988'),
-                      (2  ,30, 'sara' , ' saif','female' ,'22/4/1986'),
-		              (3 ,40, 'Nada' , 'salim','female' ,'24/5/1990');
+
+
+ insert into employee (Super_id,firstname,lastname,gender,DB)
+
+  values              (20, 'ahmed' , 'ali','male' ,'1998-10-09'),
+                      (30, 'sara' , ' saif','female' ,'1999-07-21'),
+		              (40, 'Nada' , 'salim','female' ,'2000-05-09');
 
 
  insert into department(dnum,dname,mgssn,hiredate) 
@@ -85,30 +106,12 @@ values                (21, 'IT' ,  '1, 26/3/2003')
 
 															  
 										insert into location(Dnum,loc)
-									    values               (21,'Muscat')
-										                     (31,'Nizwa')
-										                     (41 'Ibri')
+									    values               (21,'Muscat'),
+										                     (31,'Nizwa'),
+										                     (41 'Ibri');
 
 
 															 insert into Mywork(wssn,Pnum,hours)
-					                                         values            (1,11,5)
-															                   (2,22,6)
-													                           (3,33,7)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+					                                         values            (1,11,5),
+															                   (2,22,6),
+													                           (3,33,7);
