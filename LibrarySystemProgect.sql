@@ -59,8 +59,34 @@ foreign key (mem_ID) references members1 (mem_ID),
 LibID int,
 foreign Key (LibID) references library(lib_ID)
 )
+alter table book1
+ add CONSTRAINT fk_mem_id FOREIGN KEY (mem_ID) REFERENCES members1(mem_ID) ON DELETE CASCADE ON UPDATE CASCADE; 
+
+ alter table book1
+ drop column price
+
+  alter table book1
+ add  price int
 
 select * from book1
+
+UPDATE book1
+SET price =13
+where book_ID=10
+
+UPDATE book1
+SET price =15
+where book_ID=2
+
+
+UPDATE book1
+SET price =14
+where book_ID=4
+
+UPDATE book1
+SET price =15
+where book_ID=2
+
 
 
 --create loans table--
@@ -164,15 +190,13 @@ select *from payment
 																('samail',13,'Fiction,','Civl',02,'false'),
 																('ibra',14,'Non-fiction','eng',11,'true'),
 																('sur',15,'Reference','Business',04,'false'),
-																('ibri',16,'Children','math',06,'true'),
+																('ibri',16,'Children','math',06,'true'),	
 																('bidbid',17,'Reference','colors',11,'false'),
 																('dama',18,'Fiction','cats',05,'true'),
 																('aseeb',19,'Fiction','tree',04,'false'),
 																('sohar',20,'Non-fiction','animals',03,'true');
 
-
 													insert into loans(date_loan,status,date_due,date_return)
-
 													values           ('2026-01-02', 'Returned', '2026-01-12', '2026-01-10'),
 													                 ('2026-01-05', 'Issued',  '2026-01-15'   ,'2026-02-02'),
 													                 ('2026-01-08' , 'Returned','2026-01-18', '2026-01-17'),
@@ -197,6 +221,10 @@ select *from payment
 													      ('2026-01-18', 9,'no comment'),
 													      ('2026-01-25', 10,'no comment'),
 													       ('2026-01-19', 4,'no comment')
+
+
+
+
 														   select * from payment
 
 
@@ -215,5 +243,226 @@ select *from payment
 													('2026-02-03', 15.00, 'Online')
 
 													
-																 
-					         
+													SELECT *from library
+
+													SELECT *from members1
+
+													SELECT *from book1
+
+													SELECT lib_name ,loction 
+													From library
+
+													SELECT Title genre, Price
+													From book1
+
+					                                SELECT  f_name , mem_email 
+													From members1
+
+													SELECT Staff_ID, f_name, position
+													From staff
+
+													SELECT gerne
+													FROM   book1
+													WHERE gerne ='fiction';
+
+
+													SELECT loction,lib_name
+													FROM   library
+													WHERE  loction='Oman';
+
+
+														SELECT alia_sta,title
+													FROM   book1
+													WHERE alia_sta  ='true';
+
+													
+														SELECT position,f_name
+													FROM   staff
+													WHERE position='Ibra';
+
+
+													
+														SELECT *
+													FROM   loans
+													WHERE Status='Overdue';
+
+
+													SELECT *
+													FROM   book1
+													WHERE price >20;
+
+
+
+													
+													SELECT lib_name,esta_year
+													FROM   library
+													WHERE esta_year <2000;
+
+														
+													SELECT *
+													FROM   book1
+													WHERE price>=15;
+
+
+													
+													SELECT *
+													FROM   review
+													WHERE rating !=5;
+
+
+													SELECT gerne,title,alia_sta
+                                                     FROM book1
+                                                     WHERE gerne='Fiction'AND  alia_sta ='TRUE' ;
+
+													 
+													SELECT gerne,title
+                                                     FROM book1
+                                                     WHERE gerne='Fiction' OR gerne='Children' ;
+
+
+
+                                                     SELECT lib_name ,loction ,esta_year
+                                                     FROM library
+                                                     WHERE loction='Oman' AND esta_year> 2000 ;
+
+													 
+                                                     SELECT title ,price
+                                                     FROM book1
+                                                     WHERE price>=2 AND price<=10 ;
+
+
+													 SELECT  status
+                                                     FROM loans 
+                                                     WHERE status <>'Returned' ;
+
+
+
+													 SELECT title
+                                                    FROM book1
+                                                    ORDER BY title ASC;
+
+													 SELECT price
+                                                    FROM book1
+                                                    ORDER BY price DESC;
+
+
+													 SELECT mem_start_dt
+                                                    FROM members1
+                                                    ORDER BY mem_start_dt DESC;
+
+
+													
+													SELECT lib_name , esta_year
+                                                    FROM library
+                                                    ORDER BY esta_year DESC;
+
+													
+													
+													
+													SELECT rating, reviw_date 
+                                                    FROM review
+                                                    ORDER BY rating  DESC , reviw_date ASC ;
+
+
+
+													 SELECT DISTINCT title, gerne
+                                                     FROM book1;
+
+
+													 
+													 SELECT DISTINCT  loction
+                                                     FROM library;
+
+
+
+													 	 
+													 SELECT DISTINCT position
+                                                     FROM staff;
+
+													 	 
+													 SELECT DISTINCT status   
+                                                     FROM loans;
+
+
+												 SELECT TOP 5 title,price
+												 from book1
+												 ORDER BY price DESC;
+
+
+												 SELECT TOP 3 esta_year
+												 FROM library
+												 ORDER BY esta_year  ASC 
+												
+												
+												
+												 SELECT TOP 5 rating
+												 FROM review
+												 ORDER BY rating DESC 
+
+											 SELECT title
+                                             FROM book1
+                                             WHERE title LIKE 'c%';
+
+
+											 
+											 SELECT mem_email
+                                             FROM members1
+                                             WHERE mem_email LIKE '%gmail.com%';
+
+
+
+											  
+											 SELECT lib_name
+                                             FROM library
+                                             WHERE lib_name LIKE '%y';
+
+
+											 	  
+											 SELECT title
+                                             FROM book1
+                                             WHERE title LIKE '%advanture%';
+
+												
+												
+
+													 SELECT f_name
+                                                     FROM staff
+                                                     WHERE f_name LIKE 'a%';
+
+													 SELECT date_return
+                                                      FROM loans
+                                                      WHERE date_return IS NOT NULL;
+
+
+												 SELECT date_return
+                                                      FROM loans
+                                                      WHERE date_return IS NULL;
+
+
+													  SELECT comment
+                                                      FROM review
+                                                      WHERE comment IS NULL  
+                                                       OR comment = 'no comments';
+                                                      
+
+
+
+													 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+												
