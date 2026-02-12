@@ -142,7 +142,7 @@ foreign key (Date_loan) references loans(date_loan)
 select *from payment
   
 
-  insert into library( lib_name ,cont_num,loction ,esta_year)
+  insert into library( lib_name ,cont_num, loction ,esta_year)
 
   values             ('Gographical' ,'92203542',  'Oman '    ,2001),
                      ('Biology' ,'92302344',   'Britin '  ,2000),
@@ -242,6 +242,8 @@ select *from payment
 													('2026-02-01', 12.00, 'Online'),
 													('2026-02-03', 15.00, 'Online')
 
+
+													--Selection part 1 -12
 													
 													SELECT *from library
 
@@ -443,11 +445,65 @@ select *from payment
                                                       FROM review
                                                       WHERE comment IS NULL  
                                                        OR comment = 'no comments';
-                                                      
+
+													   
+													SELECT gerne ,price
+                                                    FROM book1
+													WHERE gerne ='Fiction' AND  price > 12
+													 ORDER BY price;
+
+													 SELECT TOP 5 * 
+													 FROM loans
+													 WHERE status = 'Overdue' 
+													 ORDER BY date_due DESC;
+
+													  SELECT TOP 5 * 
+													 FROM loans
+													 WHERE status = 'Overdue' 
+													 ORDER BY date_due DESC;
+
+													  SELECT  * 
+													 FROM library
+													 WHERE  loction = 'oman' AND esta_year>1999
+													 ORDER BY lib_name ;
 
 
+													 SELECT title, gerne, price, alia_sta
+													 FROM book1
+													 WHERE (gerne = 'Fiction' OR gerne = 'Children')
+													 AND (price>=2 AND price<=11)
+													 AND alia_sta = 'true' 
+													 ORDER BY price;
 
+
+													 SELECT f_name , mem_email, mem_start_dt
+													 FROM members1 
+													 WHERE (YEAR(mem_start_dt) = 1999 OR YEAR(mem_start_dt) = 2004)
+													 AND mem_email LIKE '%@gmail.com' 
+													 ORDER BY mem_start_dt;
+
+
+													 SELECT top 10 title, gerne, price, alia_sta
+													 FROM book1 
+													 WHERE (gerne = 'Fiction' OR gerne = 'Non-fiction')
+													 AND alia_sta = 'true'
+													 ORDER BY price DESC 
+
+													 SELECT *
+													 FROM loans
+													 WHERE status<> 'returned'
+													 AND  YEAR (date_loan)=2026
+													 ORDER BY date_loan
 													 
+													 
+													SELECT lib_name, loction, esta_year
+													FROM  library 
+													WHERE esta_year> 1991 
+													AND loction = 'nizwa' OR loction='ibra'
+
+
+													
+--task 12.4 I don't have relation between book table and review table--												 
 
 
 
