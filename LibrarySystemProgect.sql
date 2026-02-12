@@ -126,7 +126,7 @@ Book_id int foreign key  references book1 (book_ID),
 mem_id  int foreign Key references members1 (mem_ID)
 
 )
-select *from  review
+select *from  members1
 
 --create payment table--
 
@@ -139,7 +139,80 @@ method varchar(50),
 Date_loan DATE,
 foreign key (Date_loan) references loans(date_loan)
 )
-select *from payment
+select * from loans 
+
+
+ UPDATE loans
+SET book_id =6
+where date_loan='2026-01-05'
+
+
+ UPDATE loans
+SET book_id =9
+where date_loan='2026-01-08'
+
+
+
+ UPDATE staff
+SET lib_ID =2
+where staff_ID=1
+
+
+UPDATE staff
+SET lib_ID =3
+where staff_ID=2
+
+UPDATE staff
+SET lib_ID =6
+where staff_ID=3
+
+ UPDATE book1
+SET libID =2
+where book_ID=1
+
+
+UPDATE book1
+SET libID =4
+where book_ID=2
+
+
+UPDATE book1
+SET libID =5
+where book_ID=3
+
+UPDATE review
+SET mem_id =4
+where reviw_date ='2026-01-03'
+
+
+UPDATE review
+SET mem_id =5
+where reviw_date ='2026-01-04'
+
+UPDATE review
+SET mem_id =3
+where reviw_date ='2026-01-06'
+
+
+UPDATE review
+SET Book_id =3
+where reviw_date ='2026-01-03'
+
+
+
+UPDATE review
+SET Book_id =4
+where reviw_date ='2026-01-04'
+
+UPDATE review
+SET Book_id =7
+where reviw_date ='2026-01-06'
+
+
+
+select *from review
+
+
   
 
   insert into library( lib_name ,cont_num, loction ,esta_year)
@@ -208,6 +281,7 @@ select *from payment
 													                 ('2026-01-22', 'Returned', '2026-02-01',' 2026-01-31'),
 													                 ('2026-01-25', 'Overdue', '2026-02-04', '2026-03-14');
 
+
 													insert into review( reviw_date ,rating,comment) 
 
 													values('2026-01-03', 5, 'no comment'),
@@ -225,7 +299,7 @@ select *from payment
 
 
 
-														   select * from payment
+														   select * from loans
 
 
 													insert into payment(pay_date,amount,method)
@@ -243,7 +317,7 @@ select *from payment
 													('2026-02-03', 15.00, 'Online')
 
 
-													--Selection part 1 -12
+													--Selection part1 till part12--
 													
 													SELECT *from library
 
@@ -503,11 +577,53 @@ select *from payment
 
 
 													
---task 12.4 I don't have relation between book table and review table--												 
+--task 12.4 I don't have relation between book table and review table--	
+
+
+--task of join part A- 2.1 inner join--
+
+SELECT title,date_loan,date_due
+FROM loans l
+INNER JOIN book1 b
+ON l.book_id= b.book_ID;
+
+
+SELECT f_name,position,lib_name,loction
+FROM library l
+INNER JOIN staff s
+ON s.lib_id= l.lib_id;
+
+
+SELECT title,gerne,price,lib_name, loction
+FROM library l
+INNER JOIN book1 b
+ON b.LibID= l.lib_id;
+
+
+SELECT F_name, Rating, Comment, reviw_date
+FROM members1 m
+INNER JOIN review r
+ON r.mem_id= m.mem_ID;
+
+
+
+SELECT title , Rating, Comment, reviw_date
+FROM book1 b
+INNER JOIN review r
+ON r.Book_id= b.book_ID;
+
+
+SELECT pay_date ,amount,method,status
+FROM payment p
+INNER JOIN loans l
+ON p. pay_date= l.date_loan;
+--no relation between these tables--
 
 
 
 
+
+select *from loans
 
 
 
