@@ -620,21 +620,96 @@ ON p. pay_date= l.date_loan;
 --no relation between these tables--
 
 
+--aggregationTask 1--1.1
 
 
-
-select *from loans
-
-
+SELECT COUNT(*) AS TotalBooks
+FROM book1 ;
 
 
+SELECT COUNT(*)
+FROM members1;
 
 
+SELECT SUM(Price) AS TotalPrice 
+FROM book1;
 
 
+SELECT AVG(price) AS average_price 
+FROM book1;
+
+SELECT MIN(price) AS CheapestPrice, MAX(price) AS MostExpensivePrice 
+FROM book1;
 
 
+SELECT COUNT(*) AS OverdueLoans 
+FROM Loans
+WHERE Status = 'Overdue';
 
 
+SELECT MAX(rating) AS HighestRating 
+FROM review;
 
-												
+SELECT MIN(rating) AS LowestRating 
+FROM Review;
+
+SELECT COUNT(date_return) AS ReturnedLoan
+FROM loans
+
+SELECT SUM(Amount) AS TotalFinesCollected 
+FROM Payment;
+
+--part B--
+
+
+SELECT 
+    gerne, 
+    COUNT(*) AS BookCount
+FROM book1
+GROUP BY gerne;
+
+SELECT lib_ID, COUNT(*) AS StaffCount
+FROM staff 
+GROUP BY lib_ID ;
+
+
+SELECT Status, COUNT(*) AS LoanCount 
+FROM loans 
+GROUP BY Status;
+
+
+SELECT gerne, AVG(Price) AS AveragePrice 
+FROM book1 
+GROUP BY gerne;
+
+SELECT gerne, SUM(Price) AS TotalPrice
+FROM book1 
+GROUP BY gerne;
+
+SELECT gerne, MAX(Price) AS MostExpensiveBook
+FROM book1 GROUP BY gerne;
+
+SELECT gerne, SUM(Price) AS TotalPrice
+FROM Book1
+GROUP BY gerne;
+
+SELECT gerne, MAX(Price) AS MostExpensiveBook 
+FROM book1
+GROUP BY gerne;
+
+SELECT Rating, COUNT(*) AS ReviewCount
+FROM review
+GROUP BY Rating;
+
+SELECT libID, COUNT(*) AS BookCount 
+FROM book1 
+GROUP BY libID;
+
+SELECT Mem_ID, COUNT(*) AS LoanCount
+FROM loans 
+GROUP BY Mem_ID;
+
+
+SELECT gerne, MIN(Price) AS CheapestBook 
+FROM book1
+GROUP BY gerne;
