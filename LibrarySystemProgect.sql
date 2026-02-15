@@ -713,3 +713,193 @@ GROUP BY Mem_ID;
 SELECT gerne, MIN(Price) AS CheapestBook 
 FROM book1
 GROUP BY gerne;
+
+--Part 2:A
+
+SELECT gerne, COUNT(*) AS BookCount
+FROM book1 
+GROUP BY gerne;
+
+
+SELECT lib_ID, COUNT(*) AS StaffCount 
+FROM Staff
+GROUP BY lib_ID;
+
+
+SELECT Status, COUNT(*) AS LoanCount
+FROM loans
+GROUP BY Status;
+
+SELECT gerne, AVG(Price) AS AveragePrice
+FROM book1 
+GROUP BY gerne;
+
+SELECT gerne, SUM(Price) AS TotalPrice
+FROM book1 
+GROUP BY gerne;
+
+
+SELECT gerne, MAX(Price) AS MaxPrice 
+FROM book1
+GROUP BY gerne;
+
+
+SELECT rating, COUNT(*) AS reviewCount 
+FROM review 
+GROUP BY rating;
+
+SELECT LibID, COUNT(*) AS BookCount 
+FROM book1 
+GROUP BY libID;
+
+SELECT Mem_ID, COUNT(*) AS LoanCount
+FROM loans 
+GROUP BY Mem_ID;
+
+
+SELECT gerne, MIN(Price) AS CheapestBook 
+FROM book1
+GROUP BY gerne;
+
+
+--Part2,B--
+
+
+SELECT gerne, COUNT(*) AS BookCount
+FROM book1
+GROUP BY gerne
+ORDER BY BookCount DESC;
+
+
+
+
+SELECT gerne, AVG(Price) AS AveragePrice 
+FROM book1
+GROUP BY gerne
+ORDER BY AveragePrice ASC;
+
+
+SELECT status, COUNT(*) AS LoanCount 
+FROM loans
+GROUP BY Status 
+ORDER BY Status ASC;
+
+SELECT method, SUM(amount) AS TotalCollected
+FROM Payment 
+GROUP BY method
+ORDER BY TotalCollected DESC;
+
+
+SELECT Book_id, COUNT(*) AS ReviewCount 
+FROM review 
+GROUP BY Book_id
+ORDER BY ReviewCount DESC;
+
+
+--Part3-A--
+
+SELECT gerne, COUNT(book_ID) AS BookCount 
+FROM book1
+GROUP BY gerne 
+HAVING COUNT(book_ID) > 2;
+
+
+SELECT lib_ID, COUNT(lib_ID) AS StaffCount 
+FROM Staff 
+GROUP BY lib_ID
+HAVING COUNT(lib_ID) >= 1;
+
+SELECT mem_ID, COUNT(*) AS LoanCount
+FROM loans 
+GROUP BY mem_ID HAVING COUNT(*) > 1;
+
+SELECT gerne, AVG(Price) AS AveragePrice
+FROM book1 
+GROUP BY gerne 
+HAVING AVG(Price) > 10;
+
+
+
+SELECT book_ID, COUNT(*) AS ReviewCount 
+FROM review 
+GROUP BY book_ID HAVING COUNT(*) >= 2;
+
+
+SELECT gerne, SUM(Price) AS TotalPrice 
+FROM book1 GROUP BY gerne 
+HAVING SUM(Price) > 10
+
+SELECT method, SUM(amount) AS TotalCollected 
+FROM Payment
+GROUP BY method 
+HAVING SUM(amount) > 3;
+
+
+SELECT status, COUNT(*) AS StatusCount 
+FROM Loans
+GROUP BY Status 
+HAVING COUNT(*) > 3;
+
+SELECT mem_ID, COUNT(*) AS ReviewCount 
+FROM Review
+GROUP BY mem_ID
+HAVING COUNT(*) >= 2;
+
+
+SELECT LibID, COUNT(*) AS bookCount
+FROM book1
+GROUP BY libID 
+HAVING COUNT(*) > 2;
+
+--Part 3-B--
+
+SELECT gerne, COUNT(*) AS AvailableCount 
+FROM book1
+WHERE alia_sta ='true'
+GROUP BY gerne 
+HAVING COUNT(*) > 1;
+
+
+SELECT gerne, AVG(Price) AS AvgPrice
+FROM book1
+WHERE gerne IN ('Fiction', 'Children') 
+GROUP BY gerne
+HAVING AVG(Price) > 10;
+
+SELECT mem_ID, COUNT(*) AS ActiveLoans
+FROM Loans
+WHERE Status IN ('Overdue', 'Issued')
+GROUP BY mem_ID
+HAVING COUNT(*) > 1;
+
+
+SELECT book_id, COUNT(*) AS GoodReviews 
+FROM review 
+WHERE rating >= 3 
+GROUP BY book_id 
+HAVING COUNT(*) >= 2;
+
+
+SELECT gerne, COUNT(*) AS BooksBelow20
+FROM book1
+WHERE Price < 20 
+GROUP BY gerne
+HAVING COUNT(*) > 1;
+
+
+
+
+
+select *from book1
+
+
+
+
+
+
+
+
+
+
+
+SELECT *from library
