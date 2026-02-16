@@ -851,6 +851,9 @@ FROM book1
 GROUP BY libID 
 HAVING COUNT(*) > 2;
 
+
+
+
 --Part 3-B--
 
 SELECT gerne, COUNT(*) AS AvailableCount 
@@ -887,10 +890,145 @@ GROUP BY gerne
 HAVING COUNT(*) > 1;
 
 
+--session3: left join--
+
+SELECT b.book_ID, b.title, b.gerne, r.comment, r.rating 
+FROM book1 b 
+LEFT JOIN review r ON b.book_ID = r.Book_id
+ORDER BY b.title;
 
 
 
-select *from book1
+SELECT m. f_name AS f_name, mem_email, l.date_loan, l.date_due, l.Status AS StatusDisplay
+FROM members1 m
+LEFT JOIN Loans l ON m.mem_ID = l.Mem_ID
+ORDER BY m.f_name;
+
+
+SELECT l.date_loan, l.Mem_ID, l.date_due, l.status, p.pay_date, p.method, p.amount
+FROM Loans l 
+LEFT JOIN payment p ON l.date_loan = p.Date_loan
+ORDER BY l.date_due;
+
+
+
+SELECT l. lib_name, l.Loction,  s.f_name, s.position 
+FROM Library l
+LEFT JOIN staff s 
+ON   s.lib_ID =l.lib_ID
+ORDER BY l.lib_name;
+
+
+SELECT m.mem_ID, m.f_name, m.mem_email
+FROM members1 m 
+LEFT JOIN Loans l
+ON m.Mem_ID = l.Mem_ID 
+WHERE l.date_loan IS NULL 
+ORDER BY m.f_name;
+
+
+SELECT  b.title , b.gerne, b.price 
+FROM book1 b    
+LEFT JOIN review r
+    ON b.book_ID = r.Book_id
+WHERE r.review_ID IS NULL
+ORDER BY b.title;
+
+SELECT b.title, m.f_name,r.rating,r.comment
+FROM book1 b
+LEFT JOIN review r
+ON b.book_ID = r.Book_id 
+LEFT JOIN members1 m 
+ON r.mem_id= m.mem_ID 
+ORDER BY b.title, m.f_name;
+
+
+
+--session 4--Right join
+
+SELECT b.title, b.gerne, b.price, r.review_ID 
+FROM book1 b
+RIGHT JOIN review r
+ON b.book_ID = r.Book_id;
+
+
+
+SELECT m.f_name , m.mem_email, l.date_loan, l.date_due, l.status 
+FROM members1 m
+RIGHT JOIN loans l 
+ON  m.mem_ID = l.Mem_ID
+ORDER BY m.f_name;
+
+
+
+SELECT lib_name, b.title , b.gerne
+FROM Library l
+RIGHT JOIN book1 b 
+ON b.LibID= l.lib_ID 
+ORDER BY  b.title;
+
+SELECT s.f_name , s.position, l.lib_name
+FROM staff s 
+LEFT JOIN library l
+ON s.lib_ID = l.lib_ID
+ORDER BY s.f_name;
+
+SELECT s.f_name, s.position, l.lib_name 
+FROM Library l 
+RIGHT JOIN staff s
+ON s.lib_ID = l.lib_ID 
+ORDER BY s.f_name;
+
+SELECT title,rating,comment
+FROM book1 b
+FULL OUTER JOIN review r
+ON  b.book_ID = r.Book_id
+ORDER BY b.title
+
+SELECT l.date_loan, date_due, p.pay_date, amount
+FROM loans l
+FULL OUTER JOIN payment p
+ON l.date_loan =p. Date_loan 
+ORDER BY l.date_loan;
+
+
+SELECT f_name, title, date_loan, date_due 
+FROM members1 m 
+FULL OUTER JOIN loans l
+ON m.mem_ID = l.mem_ID
+FULL OUTER JOIN book1 b 
+ON l.book_ID = b.book_ID 
+ORDER BY m.f_name;
+
+--Mixed JOINs--
+
+SELECT f_name , date_due , status , pay_date, amount 
+FROM loans l
+INNER JOIN members1 m 
+ON l.Mem_ID = m.mem_ID
+LEFT JOIN Payment p 
+ON l.date_loan = p.Date_loan
+WHERE l.status = 'ACTIVE';
+
+SELECT f_name, title, lib_name,date_loan, date_return
+FROM library lb inner join book1 b
+on b.LibID =lb.lib_ID inner join members1 m
+on b.mem_ID=m.mem_ID inner join loans l
+on l.Mem_ID=m.mem_ID 
+
+--session 7--
+
+
+
+SELECT lb.lib_name ,COUNT(b.book_ID) AS Total_book, 
+ COUNT(s.staff_ID) AS Total_staff, 
+ COUNT(l.date_loan) AS Total_loan
+FROM Library lb
+LEFT JOIN book1 b ON b.LibID=lb.lib_ID
+LEFT JOIN staff s ON s.lib_ID=lb.lib_ID
+LEFT JOIN loans l ON lb.lib_id = l.lib_ID
+GROUP BY lb.lib_name;
+--there is no relation betwenn library table and staff table--
 
 
 
@@ -898,8 +1036,4 @@ select *from book1
 
 
 
-
-
-
-
-SELECT *from library
+SELECT *from staff
