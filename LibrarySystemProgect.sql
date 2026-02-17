@@ -1019,21 +1019,203 @@ on l.Mem_ID=m.mem_ID
 --session 7--
 
 
-
 SELECT lb.lib_name ,COUNT(b.book_ID) AS Total_book, 
  COUNT(s.staff_ID) AS Total_staff, 
  COUNT(l.date_loan) AS Total_loan
 FROM Library lb
 LEFT JOIN book1 b ON b.LibID=lb.lib_ID
-LEFT JOIN staff s ON s.lib_ID=lb.lib_ID
+LEFT JOIN staff s ON s.lib_ID=lb.lib_
 LEFT JOIN loans l ON lb.lib_id = l.lib_ID
 GROUP BY lb.lib_name;
---there is no relation betwenn library table and staff table--
+--there is no relation betwenn library table and staff table
+
+SELECT m.f_name, m.mem_email,
+COUNT(lo.date_loan) AS Totalloans,
+COUNT(r.review_ID) AS Totalreview
+FROM members1 m
+LEFT JOIN Loans lo ON m.mem_ID = lo.Mem_ID 
+LEFT JOIN review r ON m.mem_ID = r.mem_id 
+GROUP BY m.f_name, m.mem_email;
+
+
+SELECT b.title AS BookTitle, l.lib_name, 
+COUNT(lo.date_loan) AS TimesBorrowed,
+AVG(r.rating) AS Averagerating, 
+COUNT (r.review_ID) AS TotalReviews 
+FROM book1 b JOIN library l ON b.LibID = l.lib_ID 
+LEFT JOIN loans lo ON b.book_ID = lo.book_id 
+LEFT JOIN review r ON b.book_ID = r.Book_id 
+GROUP BY b.Title, l.lib_name;
+
+SELECT m.f_name AS MemberName, m.mem_email, b.title AS BookTitle, l.lib_name,
+            
+ DATEDIFF(DAY, lo.date_due, GETDATE) AS DaysOverdue
+FROM loans lo
+JOIN members1 m ON lo.Mem_ID = m.mem_ID
+JOIN book1 b ON lo.book_id = b.book_ID
+JOIN library l ON b.LibID = l.lib_ID
+WHERE lo.date_due < GETDATE()
+  AND lo.date_due IS NULL;
+
+SELECT m.mem_name, b.title AS BookTitle, l.lib_name,gerne, loan.date_loan, loan.date_return
+DATEDIFF(DAY, loan.date_loan, loan.date_return) AS DaysBorrowed, r.rating 
+FROM members1 m
+INNER JOIN loans loan ON m.MemberID = loan.MemberID 
+INNER JOIN book1 b ON loan.BookID = b.BookID 
+INNER JOIN library l ON loan.LibraryID = l.LibraryID 
+LEFT JOIN review r ON loan.LoanID = r.LoanID;
+
+
+SELECT b.title,b.gerne,  b.price, l.lib_name 
+FROM books1 b 
+INNER JOIN library l ON b.lib_ID = l.library_ID 
+LEFT JOIN loans lo ON b.book_ID = lo.book_ID 
+WHERE date_loan IS NULL;
+
+SELECT m.mem_name
+FROM Members m 
+LEFT JOIN loans lo ON m.mem_ID = lo.mem_ID 
+LEFT JOIN review r ON m.mem_ID = r.member_ID 
+WHERE loan.date_loan IS NULL AND r.review_ID IS NULL;
 
 
 
+SELECT s.staff_name, s.position, l.lib_name, 
+COUNT( b.book_ID) AS TotalBooks, 
+COUNT(lo.date_loan) AS ActiveLoans 
+FROM Staff s
+INNER JOIN Libraries l ON s.LibraryID = l.LibraryID
+LEFT JOIN book1 b ON l.lib_ID = b.Lib_ID 
+LEFT JOIN loans lo ON l.lib_ID = lo.lib_ID AND lo.date_return IS NULL
+GROUP BY s.staff_name, s.position, l.LibraryName;
+
+
+ 
 
 
 
+--Section 4 — Aggregation with join--
 
-SELECT *from staff
+SELECT lib_name , 
+COUNT(b.book_ID) AS NumberOfBooks 
+FROM library lb JOIN book1 b 
+ON b.LIBID = lb.lib_ID
+GROUP BY lib_ID,lib_name;
+
+
+
+SELECT  f_name,
+COUNT(l.date_loan) AS TotalLoans 
+FROM members1 m
+JOIN loans l ON l.Mem_ID  =m.mem_ID 
+GROUP BY m.mem_ID, m.f_name;
+
+
+select * from loans
+
+
+SELECT B.title AS BookTitle,
+COUNT(l.date_loan) AS TimesBorrowed 
+FROM book1 b JOIN loans l ON b.book_ID = l.book_id
+GROUP BY b.book_ID, b.title;
+
+SELECT b.title AS booktitle, AVG(CAST(r.rating AS DECIMAL(3,2))) AS AvgRating
+FROM  book1 b 
+JOIN review r ON b.book_ID = R.Book_id
+GROUP BY b.book_ID, b.title;
+
+
+SELECT lb.lib_name,
+SUM(b.price) AS Total_Value
+FROM Library lb 
+JOIN book1 b
+ON b.LibID=lb.lib_ID
+GROUP BY lb.lib_name;
+
+
+SELECT lb.lib_name, 
+COUNT(s.staff_ID) AS staff_Count
+FROM library lb 
+JOIN staff s ON lb.lib_ID = s.lib_ID
+GROUP BY lb.lib_ID, lib_name;
+
+
+
+SELECT f_name 
+SUM(p.amount) AS TotalFinesPaid 
+FROM members1 m
+JOIN loans l ON m.lib_id = l.Mem_ID
+JOIN payment p ON l.date_loan = p.Date_loan
+GROUP BY  m.f_name;
+
+
+SELECT gerne,
+COUNT(l.Mem_ID) AS DistinctBorrowers
+FROM book1 b
+JOIN loans l ON b.book_ID = l.book_id 
+GROUP BY b.gerne;
+
+
+SELECT b.title AS BookTitle, 
+COUNT(l.date_loan) AS TimesBorrowed,
+AVG(CAST(r.rating AS DECIMAL(3,2))) AS AvgRating
+FROM book1 b 
+LEFT JOIN loans l ON  l.book_id=b.book_ID  
+LEFT JOIN review r ON b.book_ID = r.Book_id
+GROUP BY b.book_ID, b.title;
+
+SELECT gerne,
+    COUNT(book_ID) AS Total_Books
+    SUM(CASE WHEN IsAvailable = 1 THEN 1 ELSE 0 END) AS AvailableBooks
+    AVG(price) AS Avg_Price
+FROM book1
+GROUP BY gerne; 
+
+SELECT lib_name AS LibraryName, 
+COUNT(b.book_ID) AS NumberOfBooks 
+FROM library l
+JOIN book1 b ON l.Lib_ID = b.LibID
+GROUP BY l.lib_ID, lib_name
+HAVING COUNT(b.book_id) > 2;
+
+    SELECT f_name AS FullName, 
+	COUNT(l.date_loan) AS TotalLoans
+	FROM members1 m 
+	JOIN loans l ON m.mem_ID = l.Mem_ID
+	GROUP BY m.mem_ID, m. f_name
+	HAVING COUNT(l.date_loan) > '2026-01-02';
+
+
+SELECT b.title AS BookTitle, 
+AVG(CAST(r.rating AS DECIMAL(3,2))) AS AvgRating 
+FROM book1 b 
+JOIN review r ON b.book_ID = r.Book_id 
+GROUP BY b.book_ID, b.title 
+HAVING AVG(CAST(r.rating AS DECIMAL(3,2))) > 4;
+
+
+SELECT gerne, 
+COUNT(l.date_loan) AS TotalLoans 
+FROM book1 b
+JOIN loans l ON b.book_ID = L.book_ID 
+GROUP BY B.Genre HAVING COUNTl.date_loan) > '2026-01-02';
+
+
+select lib_name AS LibraryName,
+SUM(p.amount) AS TotalFinesCollected
+FROM 
+    library l
+JOIN 
+    book1 b ON L.lib_ID = b.LibID
+JOIN 
+    loans lo ON b.book_id = lo.book_id
+JOIN 
+    payment p ON lo.date_loan = p.Date_loan
+GROUP BY 
+    l.lib_ID, lib_name
+HAVING 
+    SUM(p.amount) > 3;
+
+
+select * from payment
+
