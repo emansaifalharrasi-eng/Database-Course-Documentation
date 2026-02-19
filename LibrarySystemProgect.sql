@@ -1217,5 +1217,69 @@ HAVING
     SUM(p.amount) > 3;
 
 
+--aggregation  task5--
+
+	SELECT gerne ,COUNT(*) AS AvailableBooks 
+	FROM book1
+	WHERE alia_sta= 1
+	GROUP BY gerne
+	HAVING COUNT(*) > 1 
+	ORDER BY AvailableBooks DESC;
+
+	select *from loans
+
+
+	SELECT lb.lib_name, 
+	COUNT(lo.date_loan) AS TotalLoans 
+	FROM library  
+	JOIN book1 b ON l.LibID = b.lib_ID
+	JOIN loans lo ON b.book_ID = lo.book_id
+	GROUP BY lb.lib_name 
+	HAVING COUNT(lo.date_loan) > 2 
+	ORDER BY TotalLoans DESC;
+
+	SELECT m.mem_name,
+	COUNT(lo.date_loan AS OverdueLoans 
+	FROM members1  
+	JOIN loan lo ON m.mem_ID = lo.mem_ID 
+	WHERE lo.status = 'Overdue' 
+	GROUP BY m.mem_name
+	HAVING COUNT(lo.date_loan) >= 1
+	ORDER BY m.mem_name ASC;
+
+
+	SELECT title, 
+	COUNT(lo.date_loan) AS TotalBorrows
+	AVG r.rating
+	FROM book1 b
+	LEFT JOIN loans l ON b.Bting) AS AvgbookID = l.Book_ID
+	LEFT JOIN review r ON b.book_ID = r.book_ID 
+	GROUP BY b.title 
+	HAVING COUNT(lo.date_loan) >= 1 AND AVG(r.rating) > 3 
+	ORDER BY AvgRating DESC;
+
+
+	SELECT gerne, COUNT(*) AS TotalBooks
+	AVG(price) AS AvgPrice, MIN(Price) AS CheapestPrice 
+	FROM book1 GROUP BY gerne
+	HAVING AVG(price) BETWEEN 15 AND 50 
+	ORDER BY AvgPrice ASC;
+
+
+	SELECT lb.lib_name, l.loction AS City,
+	COUNT(DISTINCT b.book_ID) AS TotalBooks,
+	COUNT(DISTINCT s.staff_ID) AS TotalStaff,
+	COUNT(DISTINCT lo.date_loan) AS TotalLoans, COALESCE(SUM(p.amount), 0) AS TotalFines
+	FROM library l
+	LEFT JOIN book1 = s.lib_ID 
+	LEFT JOIN loan lo ON l.lib_id = lo.lib_ID
+	LEFT JOIN payment p ON l.lib_ID = p.lib_ID 
+	GROUP BY lb.lib_name, l.Location
+	HAVING COUNT(DISTINCT lo.date_loan) >= 1 
+	ORDER BY TotalLoans DESC;
+
+
+
+
 select * from payment
 
